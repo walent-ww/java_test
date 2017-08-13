@@ -1,4 +1,6 @@
 package ru.stqa.pft.sandbox;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Point {
 
@@ -15,7 +17,9 @@ public class Point {
     }
 
     public double distance(Point p1, Point p2) {
-        return Math.sqrt(Math.pow((p2.y - p1.y), 2) + Math.pow((p2.x - p1.x), 2));
+        double temp = Math.sqrt(Math.pow((p2.y - p1.y), 2) + Math.pow((p2.x - p1.x), 2));
+        double newDouble = new BigDecimal(temp).setScale(3, RoundingMode.UP).doubleValue();
+        return newDouble;
     }
 
 }
