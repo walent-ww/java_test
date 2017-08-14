@@ -21,9 +21,9 @@ public class FirstMath {
                 +distance(p1, p2));
 
         //distance from Point class
-        System.out.println(p1.distance(p1, p2));
-        System.out.println(p1.distance(new Point(-4,7), new Point(6,8.3)));
-        System.out.println(p2.distance(new Point(4,-0.9), new Point(6,8.3)));
+        System.out.println(p1.distance(p2));
+        System.out.println(p1.distance(new Point(6,8.3)));
+        System.out.println(p2.distance(new Point(6,8.3)));
 
     }
 

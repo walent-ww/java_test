@@ -13,21 +13,21 @@ public class PointTest {
     public void testDistance1(){
         Point p1 = new Point(-1,2.9);
         Point p2 = new Point(3,5);
-        Assert.assertEquals(p1.distance(p1,p2),4.518);
+        Assert.assertEquals(p1.distance(p2),4.518);
     }
 
     @Test
     public void testDistance2(){
         Point p1 = new Point(11.9,3);
         Point p2 = new Point(5,0.9);
-        Assert.assertEquals(p1.distance(p1,p2),7.213);
+        Assert.assertEquals(p1.distance(p2),7.213);
     }
 
     @Test
     public void testDistance3(){
         Point p1 = new Point(0,0);
         Point p2 = new Point(0,0);
-        Assert.assertEquals(p1.distance(p1,p2),0.0);
+        Assert.assertEquals(p1.distance(p2),0.0);
     }
 
     //def FirstMath
