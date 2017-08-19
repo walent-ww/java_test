@@ -20,3 +20,5 @@ gradle-app.setting
 sandbox/build/
 
 sandbox/out/
+
+addressbook-web-tests/out/
