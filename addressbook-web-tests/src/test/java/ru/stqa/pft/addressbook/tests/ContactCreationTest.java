@@ -5,12 +5,12 @@ import ru.stqa.pft.addressbook.model.ContactData;
 
 public class ContactCreationTest extends TestBase{
 
-  /*  @Test
+    @Test
     public void testContactCreation() {
-        app.initContactCreation();
-        app.fillContactCreation(new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com"));
-        app.submitContactCreation();
-        app.returnContactPage();
-    }*/
+        app.getNavigationHelper().gotoContactCreation();
+        app.getContactHelper().fillContactCreation(new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com"));
+        app.getContactHelper().submitContactCreation();
+        app.getContactHelper().returnContactPage();
+    }
 
 }
