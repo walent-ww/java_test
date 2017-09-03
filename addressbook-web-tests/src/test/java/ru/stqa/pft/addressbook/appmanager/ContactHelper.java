@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactHelper extends BaseHelper{
@@ -28,7 +29,6 @@ public class ContactHelper extends BaseHelper{
 
     public void gotoModificationContact(int i) {
         click(By.xpath("//table[@id='maintable']/tbody/tr["+ i + "]/td[8]/a/img"));
-
     }
 
     public void submitContactModification() {
@@ -71,5 +71,11 @@ public class ContactHelper extends BaseHelper{
 
     public int getContactCount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public void sortById (List<ContactData> before, List<ContactData> after){
+        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+        before.sort(byId);
+        after.sort(byId);
     }
 }

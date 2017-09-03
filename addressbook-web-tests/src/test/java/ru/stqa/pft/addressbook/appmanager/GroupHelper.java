@@ -4,9 +4,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupHelper extends BaseHelper {
@@ -75,6 +77,11 @@ public class GroupHelper extends BaseHelper {
             groups.add(group);
         }
         return  groups;
+    }
 
+    public void sortById (List<GroupData> before, List<GroupData> after){
+        Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+        before.sort(byId);
+        after.sort(byId);
     }
 }

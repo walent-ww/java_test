@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.tests.TestBase;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class GroupDeletionTest extends TestBase {
@@ -23,7 +24,7 @@ public class GroupDeletionTest extends TestBase {
         Assert.assertEquals(after.size(), before.size() - 1);
 
         before.remove(before.size() - 1);
-        Assert.assertEquals(before,after);
+        Assert.assertEquals(new HashSet<Object>(after), new HashSet<Object>(before));
     }
 
 }

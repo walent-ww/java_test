@@ -22,7 +22,7 @@ public class ContactModificationTest extends TestBase{
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().clickContact(before.size() - 1);
         System.out.println(before.size());
-        app.getContactHelper().gotoModificationContact(before.size() + 1);
+        app.getContactHelper().gotoModificationContact(before.size() + 1); // тк нумерация с 1 и 1 поле - шапка
         ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Firstname_update", "MiddleName_update", "LastName_update", "777 334 52 31_update", "temp@mail.com_update");
         app.getContactHelper().fillContactCreation(contact);
         app.getContactHelper().submitContactModification();
@@ -34,7 +34,8 @@ public class ContactModificationTest extends TestBase{
 
         before.remove(before.size() - 1);
         before.add(contact);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        app.getContactHelper().sortById(before, after);
+        Assert.assertEquals(after, before);
 
     }
 
