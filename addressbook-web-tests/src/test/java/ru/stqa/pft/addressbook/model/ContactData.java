@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
+
     private int id;
     private final String fname;
     private final String mname;
@@ -46,6 +47,10 @@ public class ContactData {
 
     public String getEmail1() {
         return email1;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

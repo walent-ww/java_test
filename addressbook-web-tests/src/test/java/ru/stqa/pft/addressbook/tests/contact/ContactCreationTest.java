@@ -6,6 +6,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.tests.TestBase;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreationTest extends TestBase {
@@ -19,7 +20,8 @@ public class ContactCreationTest extends TestBase {
         List<ContactData> before = app.getContactHelper().getContactList();
 
         app.getNavigationHelper().gotoContactCreation();
-        app.getContactHelper().createContact(new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com"));
+        ContactData contact = new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com");
+        app.getContactHelper().createContact(contact);
         app.getNavigationHelper().returnHomePage();
 
         // кол-во контактов после создания нового
@@ -29,6 +31,12 @@ public class ContactCreationTest extends TestBase {
         // проверяем, что контактов стало больше на 1
         Assert.assertEquals(afterCount, beforeCount + 1);
         Assert.assertEquals(after.size(), before.size() + 1);
+
+        // вычисление ID (max) для нового контакта
+        int max = after.stream().max((c1, c2) -> Integer.compare(c1.getId(), c2.getId())).get().getId();
+        contact.setId(max);
+        before.add(contact);
+        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
     }
 
 }
