@@ -41,7 +41,6 @@ public class ContactHelper extends BaseHelper{
 
     public void clickContact(int i) {
         wd.findElements(By.name("selected[]")).get(i).click();
-        //click(By.xpath("//div[1]/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
     }
 
     public boolean isThereAContact() {
@@ -55,12 +54,14 @@ public class ContactHelper extends BaseHelper{
 
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("class.entry"));
+        List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements){
-            String name = element.getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            //ContactData group = new ContactData(id, name, , null);
-           // groups.add(group);
+            // достаем из таблицы по номеру
+            List<WebElement> cells = element.findElements(By.tagName("td"));
+            String lname = cells.get(1).getText();
+            String fname = cells.get(2).getText();
+            ContactData contact = new ContactData(fname, null, lname, null, null);
+            contacts.add(contact);
         }
 
         return contacts;

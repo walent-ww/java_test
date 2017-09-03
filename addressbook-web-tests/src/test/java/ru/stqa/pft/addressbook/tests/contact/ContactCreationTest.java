@@ -12,13 +12,23 @@ public class ContactCreationTest extends TestBase {
 
     @Test
     public void testContactCreation() {
-        int before = app.getContactHelper().getContactCount();
-        //List<ContactData> before = app.getContactHelper().getContactList();
+
+        // кол-во контактов до создания нового
+        int beforeCount = app.getContactHelper().getContactCount();
+        // коллекция контактов до
+        List<ContactData> before = app.getContactHelper().getContactList();
+
         app.getNavigationHelper().gotoContactCreation();
         app.getContactHelper().createContact(new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com"));
         app.getNavigationHelper().returnHomePage();
-        int after = app.getContactHelper().getContactCount();
-        Assert.assertEquals(after, before + 1);
+
+        // кол-во контактов после создания нового
+        int afterCount = app.getContactHelper().getContactCount();
+        // коллекция контактов после
+        List<ContactData> after = app.getContactHelper().getContactList();
+        // проверяем, что контактов стало больше на 1
+        Assert.assertEquals(afterCount, beforeCount + 1);
+        Assert.assertEquals(after.size(), before.size() + 1);
     }
 
 }
