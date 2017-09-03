@@ -1,19 +1,32 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
+    private int id;
     private final String fname;
     private final String mname;
     private final String lname;
     private final String phone1;
     private final String email1;
 
-    public ContactData(String fname, String mname, String lname, String phone1, String email1) {
+    public ContactData(int id, String fname, String mname, String lname, String phone1, String email1) {
+        this.id = id;
         this.fname = fname;
         this.mname = mname;
         this.lname = lname;
         this.phone1 = phone1;
         this.email1 = email1;
     }
+
+    public ContactData(String fname, String mname, String lname, String phone1, String email1) {
+        this.id = 0;
+        this.fname = fname;
+        this.mname = mname;
+        this.lname = lname;
+        this.phone1 = phone1;
+        this.email1 = email1;
+    }
+
+    public int getId() { return id; }
 
     public String getFname() {
         return fname;
@@ -42,13 +55,15 @@ public class ContactData {
 
         ContactData that = (ContactData) o;
 
+        if (id != that.id) return false;
         if (fname != null ? !fname.equals(that.fname) : that.fname != null) return false;
         return lname != null ? lname.equals(that.lname) : that.lname == null;
     }
 
     @Override
     public int hashCode() {
-        int result = fname != null ? fname.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (fname != null ? fname.hashCode() : 0);
         result = 31 * result + (lname != null ? lname.hashCode() : 0);
         return result;
     }
@@ -56,8 +71,10 @@ public class ContactData {
     @Override
     public String toString() {
         return "ContactData{" +
-                "fname='" + fname + '\'' +
+                "id=" + id +
+                ", fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
                 '}';
     }
+
 }

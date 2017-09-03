@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.tests.TestBase;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class ContactModificationTest extends TestBase{
@@ -20,13 +21,18 @@ public class ContactModificationTest extends TestBase{
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().clickContact(before.size() - 1);
         app.getContactHelper().gotoModificationContact();
-        app.getContactHelper().fillContactCreation(new ContactData("Firstname_update", "MiddleName_update", "LastName_update", "777 334 52 31_update", "temp@mail.com_update"));
+        ContactData contact = new ContactData(before.get(before.size()-1).getId(),"Firstname_update", "MiddleName_update", "LastName_update", "777 334 52 31_update", "temp@mail.com_update");
+        app.getContactHelper().fillContactCreation(contact);
         app.getContactHelper().submitContactModification();
         app.getNavigationHelper().returnHomePage();
         // кол-во контактов после модификации
         List<ContactData> after = app.getContactHelper().getContactList();
         // проверяем, что кол-ва равны
         Assert.assertEquals(after.size(), before.size());
+
+        before.remove(before.size() - 1);
+        before.add(contact);
+        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
 
     }
 
