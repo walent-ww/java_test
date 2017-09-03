@@ -39,8 +39,9 @@ public class ContactHelper extends BaseHelper{
         wd.switchTo().alert().accept();
     }
 
-    public void clickContact() {
-        click(By.xpath("//div[1]/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
+    public void clickContact(int i) {
+        wd.findElements(By.name("selected[]")).get(i).click();
+        //click(By.xpath("//div[1]/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
     }
 
     public boolean isThereAContact() {
