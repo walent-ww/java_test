@@ -23,7 +23,7 @@ public class ContactCreationTest extends TestBase {
         app.getNavigationHelper().gotoContactCreation();
         ContactData contact = new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com");
         app.getContactHelper().createContact(contact);
-        app.getNavigationHelper().returnHomePage();
+        app.getContactHelper().returnHomePage();
 
         // кол-во контактов после создания нового
         int afterCount = app.getContactHelper().getContactCount();

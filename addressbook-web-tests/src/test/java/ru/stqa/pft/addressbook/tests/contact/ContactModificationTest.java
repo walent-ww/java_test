@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests.contact;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.tests.TestBase;
@@ -11,28 +12,30 @@ import java.util.List;
 
 public class ContactModificationTest extends TestBase{
 
-    @Test
-    public void testContactModification(){
+    @BeforeMethod
+    public void beforeMethod(){
         if (! app.getContactHelper().isThereAContact()){
             app.getNavigationHelper().gotoContactCreation();
             app.getContactHelper().createContact(new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com"));
-            app.getNavigationHelper().returnHomePage();
+            app.getContactHelper().returnHomePage();
         }
+    }
+
+
+    @Test
+    public void testContactModification(){
         // кол-во контактов до модификации
         List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().clickContact(before.size() - 1);
-        System.out.println(before.size());
-        app.getContactHelper().gotoModificationContact(before.size() + 1); // тк нумерация с 1 и 1 поле - шапка
-        ContactData contact = new ContactData(before.get(before.size() - 1).getId(),"Firstname_update", "MiddleName_update", "LastName_update", "777 334 52 31_update", "temp@mail.com_update");
-        app.getContactHelper().fillContactCreation(contact);
-        app.getContactHelper().submitContactModification();
-        app.getNavigationHelper().returnHomePage();
+        int index = before.size() - 1;
+        app.getContactHelper().clickContact(index);
+        ContactData contact = new ContactData(before.get(index).getId(),"Firstname_update", "MiddleName_update", "LastName_update", "777 334 52 31_update", "temp@mail.com_update");
+        app.getContactHelper().modifyContact(index, contact);
         // кол-во контактов после модификации
         List<ContactData> after = app.getContactHelper().getContactList();
         // проверяем, что кол-ва равны
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(before.size() - 1);
+        before.remove(index);
         before.add(contact);
         app.getContactHelper().sortById(before, after);
         Assert.assertEquals(after, before);

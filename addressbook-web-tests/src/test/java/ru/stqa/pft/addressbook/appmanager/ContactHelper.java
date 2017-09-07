@@ -23,6 +23,14 @@ public class ContactHelper extends BaseHelper{
         type(By.name("email"),contactData.getEmail1());
     }
 
+    public void modifyContact(int index, ContactData contact) {
+        gotoModificationContact(index + 2); // тк нумерация с 1 и 1 поле - шапка
+        fillContactCreation(contact);
+        submitContactModification();
+        returnHomePage();
+
+    }
+
     public void submitContactCreation() {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
@@ -42,6 +50,10 @@ public class ContactHelper extends BaseHelper{
 
     public void clickContact(int i) {
         wd.findElements(By.name("selected[]")).get(i).click();
+    }
+
+    public void returnHomePage() {
+        click(By.linkText("home page"));
     }
 
     public boolean isThereAContact() {
