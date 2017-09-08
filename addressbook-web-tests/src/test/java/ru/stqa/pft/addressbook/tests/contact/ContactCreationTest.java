@@ -5,9 +5,6 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.tests.TestBase;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class ContactCreationTest extends TestBase {
@@ -16,19 +13,18 @@ public class ContactCreationTest extends TestBase {
     public void testContactCreation() {
 
         // кол-во контактов до создания нового
-        int beforeCount = app.getContactHelper().getContactCount();
+        int beforeCount = app.contact().getContactCount();
         // коллекция контактов до
-        List<ContactData> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().list();
 
-        app.getNavigationHelper().gotoContactCreation();
+        app.goTo().createContact();
         ContactData contact = new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com");
-        app.getContactHelper().createContact(contact);
-        app.getContactHelper().returnHomePage();
+        app.contact().create(contact);
 
         // кол-во контактов после создания нового
-        int afterCount = app.getContactHelper().getContactCount();
+        int afterCount = app.contact().getContactCount();
         // коллекция контактов после
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.contact().list();
         // проверяем, что контактов стало больше на 1
         Assert.assertEquals(afterCount, beforeCount + 1);
         Assert.assertEquals(after.size(), before.size() + 1);
@@ -38,7 +34,7 @@ public class ContactCreationTest extends TestBase {
         contact.setId(max);
         before.add(contact);
 
-        app.getContactHelper().sortById(before, after);
+        app.contact().sortById(before, after);
         Assert.assertEquals(after, before);
     }
 

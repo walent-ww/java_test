@@ -23,7 +23,7 @@ public class ContactHelper extends BaseHelper{
         type(By.name("email"),contactData.getEmail1());
     }
 
-    public void modifyContact(int index, ContactData contact) {
+    public void modify(int index, ContactData contact) {
         gotoModificationContact(index + 2); // тк нумерация с 1 и 1 поле - шапка
         fillContactCreation(contact);
         submitContactModification();
@@ -48,7 +48,12 @@ public class ContactHelper extends BaseHelper{
         wd.switchTo().alert().accept();
     }
 
-    public void clickContact(int i) {
+    public void delete(int index) {
+        click(index);
+        deletionContact();
+    }
+
+    public void click(int i) {
         wd.findElements(By.name("selected[]")).get(i).click();
     }
 
@@ -60,12 +65,13 @@ public class ContactHelper extends BaseHelper{
         return isElementPresent(By.xpath("//div[1]/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
     }
 
-    public void createContact(ContactData contactData) {
+    public void create(ContactData contactData) {
         fillContactCreation(contactData);
         submitContactCreation();
+        returnHomePage();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements){
