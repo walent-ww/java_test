@@ -18,7 +18,8 @@ public class ContactCreationTest extends TestBase {
         List<ContactData> before = app.contact().list();
 
         app.goTo().createContact();
-        ContactData contact = new ContactData("Firstname", "MiddleName", "LastName", "777 334 52 31", "temp@mail.com");
+        ContactData contact = new ContactData().
+                withFname("Firstname").withMname("MiddleName").withLname("LastName").withPhone1("777 334 52 31").withEmail1("temp@mail.com");
         app.contact().create(contact);
 
         // кол-во контактов после создания нового
@@ -31,7 +32,7 @@ public class ContactCreationTest extends TestBase {
 
         // вычисление ID (max) для нового контакта
         int max = after.stream().max((c1, c2) -> Integer.compare(c1.getId(), c2.getId())).get().getId();
-        contact.setId(max);
+        contact.withId(max);
         before.add(contact);
 
         app.contact().sortById(before, after);
