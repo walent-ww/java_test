@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.tests.TestBase;
 
-import java.util.List;
 import java.util.Set;
 
 public class ContactModificationTest extends TestBase{

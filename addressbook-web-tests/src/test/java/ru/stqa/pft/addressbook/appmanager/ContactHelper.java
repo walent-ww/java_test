@@ -22,7 +22,7 @@ public class ContactHelper extends BaseHelper{
     }
 
     public void modify(ContactData contact) {
-        gotoModificationContactById(contact.getId()); 
+        gotoModificationContactById(contact.getId());
         fillContactCreation(contact);
         submitContactModification();
         returnHomePage();

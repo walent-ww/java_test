@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.tests.TestBase;
 
-import java.util.List;
 import java.util.Set;
 
 public class GroupCreationTest extends TestBase {
