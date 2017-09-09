@@ -69,7 +69,7 @@ public class ContactData {
                 ", lname='" + lname + '\'' +
                 '}';
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
