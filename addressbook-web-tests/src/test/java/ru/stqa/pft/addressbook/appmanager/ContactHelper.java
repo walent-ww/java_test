@@ -21,8 +21,8 @@ public class ContactHelper extends BaseHelper{
         type(By.name("email"),contactData.getEmail1());
     }
 
-    public void modify(int index, ContactData contact) {
-        gotoModificationContact(index + 2); // тк нумерация с 1 и 1 поле - шапка
+    public void modify(ContactData contact) {
+        gotoModificationContactById(contact.getId()); 
         fillContactCreation(contact);
         submitContactModification();
         returnHomePage();
@@ -35,6 +35,10 @@ public class ContactHelper extends BaseHelper{
 
     public void gotoModificationContact(int i) {
         click(By.xpath("//table[@id='maintable']/tbody/tr["+ i + "]/td[8]/a/img"));
+    }
+
+    public void gotoModificationContactById(int id) {
+        wd.findElement(By.xpath("//a[@href='edit.php?id=" + id + "']")).click();
     }
 
     public void submitContactModification() {

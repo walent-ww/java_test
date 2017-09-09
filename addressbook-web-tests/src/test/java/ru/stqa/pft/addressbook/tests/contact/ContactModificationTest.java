@@ -7,6 +7,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.tests.TestBase;
 
 import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTest extends TestBase{
 
@@ -25,22 +26,21 @@ public class ContactModificationTest extends TestBase{
     @Test
     public void testContactModification(){
         // кол-во контактов до модификации
-        List<ContactData> before = app.contact().list();
-        int index = before.size() - 1;
-        app.contact().click(index);
+        Set<ContactData> before = app.contact().all();
+        //app.contact().click(index);
+        ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData().
-                withId(before.get(index).getId()).
+                withId(modifiedContact.getId()).
                 withFname("Firstname_update").withMname("MiddleName_update").
                 withLname("LastName_update").withPhone1("777 334 52 31_update").withEmail1("temp@mail.com_update");
-        app.contact().modify(index, contact);
+        app.contact().modify(contact);
         // кол-во контактов после модификации
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> after = app.contact().all();
         // проверяем, что кол-ва равны
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(index);
+        before.remove(modifiedContact);
         before.add(contact);
-        app.contact().sortById(before, after);
         Assert.assertEquals(after, before);
 
     }

@@ -58,8 +58,8 @@ public class GroupHelper extends BaseHelper {
         returnGroupPage();
     }
 
-    public void modify(int index, GroupData group) {
-        selectGroup(index);
+    public void modify(GroupData group) {
+        selectGroupById(group.getId());
         initGroupModification();
         fillGroupForm(group);
         submitGroupMoification();
