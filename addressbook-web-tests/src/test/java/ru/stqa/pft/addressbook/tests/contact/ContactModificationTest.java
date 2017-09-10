@@ -41,9 +41,9 @@ public class ContactModificationTest extends TestBase{
                 withLname("LastName_update").withPhone1("777 334 52 31_update").withEmail1("temp@mail.com_update");
         app.contact().modify(contact);
         // кол-во контактов после модификации
+        assertThat(app.contact().count(), equalTo(before.size()));
         Contacts after = app.contact().all();
         // проверяем, что кол-ва равны
-        assertThat(after.size(), equalTo(before.size()));
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
 
     }
