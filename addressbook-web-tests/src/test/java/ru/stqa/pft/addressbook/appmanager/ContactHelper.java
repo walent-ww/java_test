@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.*;
 
@@ -27,7 +26,6 @@ public class ContactHelper extends BaseHelper{
         gotoModificationContactById(contact.getId());
         fillContactCreation(contact);
         submitContactModification();
-        contactCache =  null;
         returnHomePage();
 
     }
@@ -61,7 +59,6 @@ public class ContactHelper extends BaseHelper{
     public void delete(ContactData contact) {
         clickById(contact.getId());
         deletionContact();
-        contactCache = null;
     }
 
     private void clickById(int id) {
@@ -83,7 +80,6 @@ public class ContactHelper extends BaseHelper{
     public void create(ContactData contactData) {
         fillContactCreation(contactData);
         submitContactCreation();
-        contactCache = null;
         returnHomePage();
     }
 
@@ -101,12 +97,8 @@ public class ContactHelper extends BaseHelper{
 
         return contacts;
     }
-    private Contacts contactCache = null;
 
     public Contacts all() {
-        /*if (contactCache !=  null) {
-            return new Contacts(contactCache);
-        }*/
         Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements){
