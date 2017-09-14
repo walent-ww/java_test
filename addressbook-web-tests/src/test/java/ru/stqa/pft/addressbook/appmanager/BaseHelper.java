@@ -6,6 +6,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.File;
+
 public class BaseHelper {
     protected WebDriver wd;
 
@@ -19,19 +21,23 @@ public class BaseHelper {
 
     protected void type(By locator, String text) {
         click(locator);
-        if (text != null){
+        if (text != null) {
             wd.findElement(locator).clear();
             wd.findElement(locator).sendKeys(text);
 
         }
     }
 
-    public boolean isElementPresent(By locator){
+    protected void attach(By locator, File file) {
+        wd.findElement(locator).sendKeys(file.getAbsolutePath());
+
+    }
+
+    public boolean isElementPresent(By locator) {
         try {
             wd.findElement(locator);
             return true;
-        }
-        catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             return false;
         }
     }
