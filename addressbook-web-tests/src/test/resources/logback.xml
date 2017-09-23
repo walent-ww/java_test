@@ -1,6 +1,6 @@
 <configuration>
 
-    <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
+    <timestamp key="bySecond" datePattern="yyyyMMdd'-'HHmmss"/>
     <property name="LOG_DIR" value="src/test/log" />
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
@@ -12,8 +12,9 @@
     </appender>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- encoders are assigned the type
-             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
