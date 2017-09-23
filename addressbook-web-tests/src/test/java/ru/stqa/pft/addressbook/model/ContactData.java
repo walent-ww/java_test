@@ -22,7 +22,7 @@ public class ContactData {
     @Column(name = "firstname")
     private String fname;
 
-    @Transient
+    @Column(name = "middlename")
     private String mname;
 
     @Expose
@@ -209,12 +209,22 @@ public class ContactData {
         return email1;
     }
 
+
     @Override
     public String toString() {
         return "ContactData{" +
                 "id=" + id +
+
                 ", fname='" + fname + '\'' +
+                ", mname='" + mname + '\'' +
                 ", lname='" + lname + '\'' +
+                ", email1='" + email1 + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", address1='" + address1 + '\'' +
                 '}';
     }
 
@@ -227,7 +237,15 @@ public class ContactData {
 
         if (id != that.id) return false;
         if (fname != null ? !fname.equals(that.fname) : that.fname != null) return false;
-        return lname != null ? lname.equals(that.lname) : that.lname == null;
+        if (mname != null ? !mname.equals(that.mname) : that.mname != null) return false;
+        if (lname != null ? !lname.equals(that.lname) : that.lname != null) return false;
+        if (email1 != null ? !email1.equals(that.email1) : that.email1 != null) return false;
+        if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
+        if (email3 != null ? !email3.equals(that.email3) : that.email3 != null) return false;
+        if (homePhone != null ? !homePhone.equals(that.homePhone) : that.homePhone != null) return false;
+        if (mobilePhone != null ? !mobilePhone.equals(that.mobilePhone) : that.mobilePhone != null) return false;
+        if (workPhone != null ? !workPhone.equals(that.workPhone) : that.workPhone != null) return false;
+        return address1 != null ? address1.equals(that.address1) : that.address1 == null;
 
     }
 
@@ -235,9 +253,15 @@ public class ContactData {
     public int hashCode() {
         int result = id;
         result = 31 * result + (fname != null ? fname.hashCode() : 0);
+        result = 31 * result + (mname != null ? mname.hashCode() : 0);
         result = 31 * result + (lname != null ? lname.hashCode() : 0);
+        result = 31 * result + (email1 != null ? email1.hashCode() : 0);
+        result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+        result = 31 * result + (email3 != null ? email3.hashCode() : 0);
+        result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+        result = 31 * result + (mobilePhone != null ? mobilePhone.hashCode() : 0);
+        result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+        result = 31 * result + (address1 != null ? address1.hashCode() : 0);
         return result;
     }
-
-
 }

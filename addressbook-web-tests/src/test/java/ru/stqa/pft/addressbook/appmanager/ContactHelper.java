@@ -19,9 +19,12 @@ public class ContactHelper extends BaseHelper{
         type(By.name("middlename"),contactData.getMname());
         type(By.name("address"), contactData.getAddress1());
         type(By.name("lastname"),contactData.getLname());
-        type(By.name("home"),contactData.getPhone1());
         type(By.name("email"),contactData.getEmail1());
         //attach(By.name("photo"),contactData.getPhoto());
+
+        type(By.name("home"), contactData.getHomePhone());
+        type(By.name("mobile"), contactData.getMobilePhone());
+        type(By.name("work"), contactData.getWorkPhone());
     }
 
     public void modify(ContactData contact) {
@@ -133,7 +136,6 @@ public class ContactHelper extends BaseHelper{
         gotoModificationContactById(contact.getId());
         String fname = wd.findElement(By.name("firstname")).getAttribute("value");
         String lname = wd.findElement(By.name("lastname")).getAttribute("value");
-        //String mname = wd.findElement(By.name("firstname")).getAttribute("value");
         String homePhone = wd.findElement(By.name("home")).getAttribute("value");
         String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
         String workPhone = wd.findElement(By.name("work")).getAttribute("value");
@@ -143,8 +145,7 @@ public class ContactHelper extends BaseHelper{
         String email3 = wd.findElement(By.name("email3")).getAttribute("value");
 
         return new ContactData().withId(contact.getId()).withFname(fname).withLname(lname).withHomePhone(homePhone).
-                withMobilePhone(mobilePhone).withWorkPhone(workPhone).withAddress1(address1).
-                withEmail1(email1).withEmail2(email2).withEmail3(email3);
+                withMobilePhone(mobilePhone).withWorkPhone(workPhone).withAddress1(address1).withEmail1(email1).withEmail2(email2).withEmail3(email3);
 
     }
 }

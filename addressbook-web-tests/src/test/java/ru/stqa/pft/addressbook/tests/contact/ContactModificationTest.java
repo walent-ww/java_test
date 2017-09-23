@@ -20,7 +20,7 @@ public class ContactModificationTest extends TestBase{
     @BeforeMethod
     public void beforeMethod(){
         app.goTo().homePage();
-        if (app.contact().all().size() == 0){
+        if (app.db().contacts().size() == 0){
             app.goTo().createContact();
             app.contact().create(new ContactData().
                     withFname("Firstname").withMname("MiddleName").withLname("LastName").
@@ -32,17 +32,17 @@ public class ContactModificationTest extends TestBase{
     @Test
     public void testContactModification(){
         // кол-во контактов до модификации
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         //app.contact().click(index);
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData().
                 withId(modifiedContact.getId()).
                 withFname("Firstname_update").withMname("MiddleName_update").
-                withLname("LastName_update").withPhone1("777 334 52 31_update").withEmail1("temp@mail.com_update");
+                withLname("LastName_update").withHomePhone("777 334 52 31_update").withEmail1("temp@mail.com_update");
         app.contact().modify(contact);
         // кол-во контактов после модификации
         assertThat(app.contact().count(), equalTo(before.size()));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         // проверяем, что кол-ва равны
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
 

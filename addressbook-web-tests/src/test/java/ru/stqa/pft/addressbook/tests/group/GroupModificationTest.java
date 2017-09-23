@@ -11,6 +11,7 @@ import ru.stqa.pft.addressbook.tests.TestBase;
 
 import java.util.Set;
 
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 import static org.testng.Assert.assertEquals;
 
@@ -19,21 +20,25 @@ public class GroupModificationTest extends TestBase {
     @BeforeMethod
     public void beforeMethod(){
         app.goTo().groupPage();
-        if (app.group().list().size() == 0){
+        if (app.db().groups().size() == 0) {
             app.group().create(new GroupData().withName("group1"));
         }
+
+       /* if (app.group().list().size() == 0){
+            app.group().create(new GroupData().withName("group1"));
+        }*/
     }
 
     @Test
     public void testModificationGroup(){
-        Groups before = app.group().all();
+        Groups before = app.db().groups();
         GroupData modifiedGroup = before.iterator().next();
         GroupData group = new GroupData().
                 withId(modifiedGroup.getId()).withName("group2").withFooter("group22").withHeader("group222");
         app.group().modify(group);
         assertEquals(app.group().count(), before.size());
-        Groups after = app.group().all();
-        assertThat(after, CoreMatchers.equalTo(before.without(modifiedGroup).withAdded(group)));
+        Groups after = app.db().groups();
+        assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
     }
 
 }
