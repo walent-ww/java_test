@@ -62,7 +62,7 @@ public class ContactAddGroup extends TestBase {
         // берем контакт, у которого не все группы
         ContactData editedContact = app.contact().searchContactForGroup(contacts, groups);
 
-        //ContactData editedContact = contacts.iterator().next();
+        // выбираем группу, которой еще нет у контакта
         GroupData group = app.contact().groupForContact(editedContact, groups);
 
         // достаём из БД изменяемый контакт
