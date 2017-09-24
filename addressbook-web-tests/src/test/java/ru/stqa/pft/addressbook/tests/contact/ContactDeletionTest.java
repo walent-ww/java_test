@@ -18,12 +18,13 @@ import static org.testng.Assert.assertEquals;
 public class ContactDeletionTest extends TestBase {
 
     @BeforeMethod
-    public void beforeMethod(){
+    public void beforeMethod() {
         app.goTo().homePage();
         if (app.db().contacts().size() == 0){
             app.goTo().createContact();
             app.contact().create(new ContactData().
-                    withFname("Firstname").withMname("MiddleName").withLname("LastName").withPhone1("777 334 52 31").withEmail1("temp@mail.com"));
+                    withFname("Firstname").withMname("MiddleName").withLname("LastName").withPhone1("777 334 52 31").
+                    withEmail1("temp@mail.com"), false);
         }
     }
 

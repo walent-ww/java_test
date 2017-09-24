@@ -17,12 +17,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ContactInfoTest extends TestBase{
 
     @BeforeMethod
-    public void beforeMethod(){
+    public void beforeMethod() {
         app.goTo().homePage();
         if (app.contact().all().size() == 0){
             app.goTo().createContact();
             app.contact().create(new ContactData().
-                    withFname("Firstname").withMname("MiddleName").withLname("LastName").withPhone1("777 334 52 31").withEmail1("temp@mail.com"));
+                    withFname("Firstname").withMname("MiddleName").withLname("LastName").withPhone1("777 334 52 31").
+                    withEmail1("temp@mail.com"), false);
         }
     }
 

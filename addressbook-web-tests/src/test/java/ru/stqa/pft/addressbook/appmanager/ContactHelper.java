@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
@@ -17,7 +18,7 @@ public class ContactHelper extends BaseHelper {
         super(wd);
     }
 
-    public void fillContactCreation(ContactData contactData) {
+    public void fillContactCreation(ContactData contactData, boolean gr) {
         type(By.name("firstname"), contactData.getFname());
         type(By.name("middlename"), contactData.getMname());
         type(By.name("address"), contactData.getAddress1());
@@ -28,11 +29,15 @@ public class ContactHelper extends BaseHelper {
         type(By.name("home"), contactData.getHomePhone());
         type(By.name("mobile"), contactData.getMobilePhone());
         type(By.name("work"), contactData.getWorkPhone());
+
+        if (gr) {
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+        }
     }
 
     public void modify(ContactData contact) {
         gotoModificationContactById(contact.getId());
-        fillContactCreation(contact);
+        fillContactCreation(contact, false);
         submitContactModification();
         returnHomePage();
     }
@@ -84,8 +89,8 @@ public class ContactHelper extends BaseHelper {
         return isElementPresent(By.xpath("//div[1]/div[4]/form[2]/table/tbody/tr[2]/td[1]/input"));
     }
 
-    public void create(ContactData contactData) {
-        fillContactCreation(contactData);
+    public void create(ContactData contactData, boolean gr) {
+        fillContactCreation(contactData, gr);
         submitContactCreation();
         returnHomePage();
     }
@@ -155,16 +160,16 @@ public class ContactHelper extends BaseHelper {
         wd.findElement(By.name("add")).click();
     }
 
-    public void selectGroupList(GroupData group) {
+    public void selectGroupListAddTo(GroupData group) {
         new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
     }
 
     // добавление контакту группы
-    public void contactAddGroup(ContactData editedContact, GroupData group) throws InterruptedException {
-            clickById(editedContact.getId());
-            selectGroupList(group);
-            addGroup();
-            System.out.println("added");
+    public void contactAddGroup(ContactData editedContact, GroupData group) {
+        clickById(editedContact.getId());
+        selectGroupListAddTo(group);
+        addGroup();
+        System.out.println("added");
     }
 
     //передаем контакт, чтоб найти группу, в которой его нет
@@ -179,10 +184,46 @@ public class ContactHelper extends BaseHelper {
     }
 
     public ContactData searchContactForGroup(Contacts contacts, Groups groups) {
-        for (ContactData contact : contacts){
+        for (ContactData contact : contacts) {
             if (contact.getGroups().size() < groups.size())
                 return contact;
         }
         return null;
+    }
+
+    public void deleteFromGroup(ContactData contact, GroupData group) {
+        selectGroupList(group);
+        clickById(contact.getId());
+        removeFromGroup(group);
+    }
+
+    private void removeFromGroup(GroupData group) {
+        Assert.assertEquals(wd.findElement(By.name("remove")).getAttribute("value"), "Remove from \"" + group.getName() + "\"");
+        wd.findElement(By.name("remove")).click();
+    }
+
+    private void selectGroupList(GroupData group) {
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+    }
+
+    // Группа, из которой удалим контакт
+    public GroupData groupForContactDel(Contacts contacts, Groups groups) {
+        for (GroupData g : groups) {
+            for (ContactData c : contacts) {
+                if (c.getGroups().contains(g)) {
+                    return g;
+                }
+
+            }
+        }
+        return null;
+    }
+
+    // первый попавшийся контакт, которые есть в этой группе
+    public ContactData contactForDel(Contacts contacts, GroupData group) {
+        for (ContactData c : contacts){
+            if (c.getGroups().contains(group))
+                return c;
+        } return null;
     }
 }
