@@ -3,23 +3,26 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.*;
 
-public class ContactHelper extends BaseHelper{
+public class ContactHelper extends BaseHelper {
 
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
 
     public void fillContactCreation(ContactData contactData) {
-        type(By.name("firstname"),contactData.getFname());
-        type(By.name("middlename"),contactData.getMname());
+        type(By.name("firstname"), contactData.getFname());
+        type(By.name("middlename"), contactData.getMname());
         type(By.name("address"), contactData.getAddress1());
-        type(By.name("lastname"),contactData.getLname());
-        type(By.name("email"),contactData.getEmail1());
+        type(By.name("lastname"), contactData.getLname());
+        type(By.name("email"), contactData.getEmail1());
         //attach(By.name("photo"),contactData.getPhoto());
 
         type(By.name("home"), contactData.getHomePhone());
@@ -32,7 +35,6 @@ public class ContactHelper extends BaseHelper{
         fillContactCreation(contact);
         submitContactModification();
         returnHomePage();
-
     }
 
     public void submitContactCreation() {
@@ -40,7 +42,7 @@ public class ContactHelper extends BaseHelper{
     }
 
     public void gotoModificationContact(int i) {
-        click(By.xpath("//table[@id='maintable']/tbody/tr["+ i + "]/td[8]/a/img"));
+        click(By.xpath("//table[@id='maintable']/tbody/tr[" + i + "]/td[8]/a/img"));
     }
 
     public void gotoModificationContactById(int id) {
@@ -66,7 +68,7 @@ public class ContactHelper extends BaseHelper{
         deletionContact();
     }
 
-    private void clickById(int id) {
+    public void clickById(int id) {
         wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
@@ -91,7 +93,7 @@ public class ContactHelper extends BaseHelper{
     public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
-        for (WebElement element : elements){
+        for (WebElement element : elements) {
             // достаем из таблицы по номеру
             List<WebElement> cells = element.findElements(By.tagName("td"));
             String lname = cells.get(1).getText();
@@ -106,7 +108,7 @@ public class ContactHelper extends BaseHelper{
     public Contacts all() {
         Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
-        for (WebElement element : elements){
+        for (WebElement element : elements) {
             // достаем из таблицы по номеру
             List<WebElement> cells = element.findElements(By.tagName("td"));
             String lname = cells.get(1).getText();
@@ -126,7 +128,7 @@ public class ContactHelper extends BaseHelper{
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public void sortById (List<ContactData> before, List<ContactData> after){
+    public void sortById(List<ContactData> before, List<ContactData> after) {
         Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
         before.sort(byId);
         after.sort(byId);
@@ -147,5 +149,40 @@ public class ContactHelper extends BaseHelper{
         return new ContactData().withId(contact.getId()).withFname(fname).withLname(lname).withHomePhone(homePhone).
                 withMobilePhone(mobilePhone).withWorkPhone(workPhone).withAddress1(address1).withEmail1(email1).withEmail2(email2).withEmail3(email3);
 
+    }
+
+    public void addGroup() {
+        wd.findElement(By.name("add")).click();
+    }
+
+    public void selectGroupList(GroupData group) {
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group.getName());
+    }
+
+    // добавление контакту группы
+    public void contactAddGroup(ContactData editedContact, GroupData group) throws InterruptedException {
+            clickById(editedContact.getId());
+            selectGroupList(group);
+            addGroup();
+            System.out.println("added");
+    }
+
+    //передаем контакт, чтоб найти группу, в которой его нет
+    public GroupData groupForContact(ContactData contact, Groups groups) {
+        for (GroupData g : groups) {
+            if (!contact.getGroups().contains(g)) {
+                return g;
+            }
+
+        }
+        return null;
+    }
+
+    public ContactData searchContactForGroup(Contacts contacts, Groups groups) {
+        for (ContactData contact : contacts){
+            if (contact.getGroups().size() < groups.size())
+                return contact;
+        }
+        return null;
     }
 }
