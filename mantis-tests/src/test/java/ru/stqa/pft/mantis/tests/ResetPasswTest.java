@@ -1,5 +1,6 @@
 package ru.stqa.pft.mantis.tests;
 
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -40,6 +41,7 @@ public class ResetPasswTest extends TestBase{
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 20000);
         String confLink = findConfLink(mailMessages, email);
         app.login().finish(confLink, "pass1");
+        Assert.assertTrue(app.newSession().login("user1", "pass1"));
 
     }
 

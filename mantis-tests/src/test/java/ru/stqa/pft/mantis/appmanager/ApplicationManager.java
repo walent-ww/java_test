@@ -69,4 +69,8 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         return mailHelper;
     }
+
+    public HttpSession newSession(){
+        return new HttpSession(this);
+    }
 }
