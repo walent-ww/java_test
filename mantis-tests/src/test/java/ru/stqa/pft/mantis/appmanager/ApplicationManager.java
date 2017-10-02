@@ -18,6 +18,7 @@ public class ApplicationManager {
     private WebDriver wd;
 
     private String browser;
+    private MailHelper mailHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -57,5 +58,15 @@ public class ApplicationManager {
 
     public LoginHelper login() throws IOException {
         return new LoginHelper(this);
+    }
+
+    public NavigationHelper goTo() {
+        return new NavigationHelper(this);
+    }
+
+    public MailHelper mail(){
+        if (mailHelper == null)
+            mailHelper = new MailHelper(this);
+        return mailHelper;
     }
 }

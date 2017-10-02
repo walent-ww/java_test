@@ -8,7 +8,13 @@ import org.openqa.selenium.WebDriver;
 import java.io.File;
 
 public class BaseHelper {
+    protected ApplicationManager app;
     protected WebDriver wd;
+
+    public BaseHelper(ApplicationManager app) {
+        this.app = app;
+        this.wd = app.getDriver();
+    }
 
 
     protected void click(By locator) {
