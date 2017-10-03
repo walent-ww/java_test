@@ -1,5 +1,6 @@
 package ru.stqa.pft.mantis.appmanager;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
@@ -51,5 +52,12 @@ public class BaseHelper {
         } catch (NoAlertPresentException e) {
             return false;
         }
+    }
+
+    public String generatePassw(){
+        String newPassw = RandomStringUtils.randomAlphabetic(8);
+        System.out.println(newPassw);
+        return newPassw;
+
     }
 }
