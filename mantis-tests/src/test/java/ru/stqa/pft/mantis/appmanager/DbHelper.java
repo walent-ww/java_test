@@ -7,6 +7,7 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import ru.stqa.pft.mantis.model.UserData;
+import ru.stqa.pft.mantis.model.Users;
 
 import java.util.List;
 
@@ -23,15 +24,15 @@ public class DbHelper {
         sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
-    public void users(){
+    public Users users(){
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
-        List<Object> result = (List<Object>) session.createQuery( "from UserData" );
-        /*for ( GroupData group : result) {
-            System.out.println(group);
-        }*/
+        List<UserData> result = session.createQuery( "from UserData where id != 1" ).list(); //id=1 только у админа
+        for ( UserData user : result) {
+            System.out.println(user);
+        }
         session.getTransaction().commit();
         session.close();
-
+        return new Users(result);
     }
 }

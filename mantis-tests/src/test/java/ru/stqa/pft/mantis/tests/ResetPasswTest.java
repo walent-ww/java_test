@@ -9,6 +9,8 @@ import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 import ru.stqa.pft.mantis.appmanager.BaseHelper;
 import ru.stqa.pft.mantis.model.MailMessage;
+import ru.stqa.pft.mantis.model.UserData;
+import ru.stqa.pft.mantis.model.Users;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -30,18 +32,18 @@ public class ResetPasswTest extends TestBase{
 
     @Test
     public void testResetPassw() throws IOException, InterruptedException, MessagingException {
+        // какой-нить юзер не админ
+        UserData user = app.db().users().iterator().next();
+
         app.login().log(app.getProperty("webLogin"), app.getProperty("webPassw"));
         app.goTo().manageUser();
-        Thread.sleep(900);
-        app.goTo().clickUser("user1");
-        Thread.sleep(100);
+        app.goTo().clickUser(user.getName());
         app.goTo().resetPassw();
-        //app.login().logout();
-        String email = "user1@localhost.localdomain";
+        String email = user.getEmail();
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 20000);
         String confLink = findConfLink(mailMessages, email);
         app.login().finish(confLink, "pass1");
-        Assert.assertTrue(app.newSession().login("user1", "pass1"));
+        Assert.assertTrue(app.newSession().login(user.getName(), "pass1"));
 
     }
 

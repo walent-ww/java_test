@@ -8,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import ru.stqa.pft.mantis.model.UserData;
 
 import java.util.List;
 
@@ -34,11 +35,10 @@ public class DBTest {
     public void testHbConnectionGroups(){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<Object> result = session.createQuery("from UserData").list();
-        /*for ( GroupData group : result) {
-            System.out.println(group);
-            System.out.println(group.getContacts());
-        }*/
+        List<UserData> result = session.createQuery( "from UserData where id != 1" ).list();
+        for ( UserData user : result) {
+            System.out.println(user);
+        }
         session.getTransaction().commit();
         session.close();
     }

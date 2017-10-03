@@ -11,14 +11,17 @@ import java.util.Set;
 /**
  * Created by user on 01.10.17.
  */
+@Entity
 @Table(name = "mantis_user_table")
 public class UserData {
     @Id
     @Column(name = "id")
     private int id;
-    @Transient
+
+    @Column(name = "username")
     private String name;
-    @Transient
+
+    @Column(name = "email")
     private String email;
 
 
@@ -44,6 +47,15 @@ public class UserData {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "UserData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 
 }
