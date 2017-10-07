@@ -36,7 +36,6 @@ public class SoapTest extends TestBase{
         Issue issue = app.soap().issues().iterator().next();
         System.out.println(issue.getId());
         skipIfNotFixed(issue.getId());
-        app.soap().mantisConnect();
         System.out.println(isIssueOpen(issue.getId()));
     }
 }

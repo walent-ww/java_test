@@ -27,19 +27,19 @@ public class SoapHelper {
 
    public IssueData getIsuueById(int id) throws MalformedURLException, ServiceException, RemoteException {
        MantisConnectPortType mc = mantisConnect();
-       IssueData issueData = mc.mc_issue_get("administrator", "root", BigInteger.valueOf(id));
+       IssueData issueData = mc.mc_issue_get(app.getProperty("webLogin"), app.getProperty("webPassw"), BigInteger.valueOf(id));
        return issueData;
    }
 
     public MantisConnectPortType mantisConnect() throws MalformedURLException, ServiceException {
     return new MantisConnectLocator().
-            getMantisConnectPort(new URL("http://localhost/mantisbt-1.2.19/api/soap/mantisconnect.php"));
+            getMantisConnectPort(new URL(app.getProperty("webUrl") + app.getProperty("soapConnect")));
     }
 
 
     public Set<Issue> issues() throws MalformedURLException, ServiceException, RemoteException {
         MantisConnectPortType mc = mantisConnect();
-        IssueData[] issues = mc.mc_filter_get_issues("administrator", "root", BigInteger.valueOf(1), BigInteger.valueOf(1), BigInteger.valueOf(1), BigInteger.valueOf(-1));
+        IssueData[] issues = mc.mc_filter_get_issues(app.getProperty("webLogin"), app.getProperty("webPassw"), BigInteger.valueOf(1), BigInteger.valueOf(1), BigInteger.valueOf(1), BigInteger.valueOf(-1));
         return Arrays.stream(issues).map((i) -> new Issue().withId(i.getId().intValue()).withSum(i.getSummary())
                 .withStatus(i.getStatus().toString())).collect(Collectors.toSet());
 
