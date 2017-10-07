@@ -6,10 +6,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.BrowserType;
 
+import javax.xml.rpc.ServiceException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +22,7 @@ public class ApplicationManager {
     private String browser;
     private MailHelper mailHelper;
     private DbHelper dbHelper;
+    private SoapHelper soapHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -80,5 +83,12 @@ public class ApplicationManager {
             dbHelper = new DbHelper();
         }
         return dbHelper;
+    }
+
+    public SoapHelper soap() throws MalformedURLException, ServiceException {
+        if (soapHelper == null){
+            soapHelper = new SoapHelper(this);
+        }
+        return soapHelper;
     }
 }
