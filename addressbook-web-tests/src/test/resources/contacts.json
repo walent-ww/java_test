@@ -1,0 +1,17 @@
+[
+  {
+    "fname": "Fname 0",
+    "lname": "Lname 0",
+    "address1": "москва ул Мира дом 0"
+  },
+  {
+    "fname": "Fname 1",
+    "lname": "Lname 1",
+    "address1": "москва ул Мира дом 1"
+  },
+  {
+    "fname": "Fname 2",
+    "lname": "Lname 2",
+    "address1": "москва ул Мира дом 2"
+  }
+]

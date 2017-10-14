@@ -10,7 +10,6 @@ import ru.stqa.pft.addressbook.tests.TestBase;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.*;
 
 /**
  * Created by user on 24.09.17.

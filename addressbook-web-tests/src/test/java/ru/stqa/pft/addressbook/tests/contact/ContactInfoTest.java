@@ -14,7 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by user on 10.09.17.
  */
-public class ContactInfoTest extends TestBase{
+public class ContactInfoTest extends TestBase {
 
     @BeforeMethod
     public void beforeMethod() {
