@@ -2,8 +2,6 @@ package ru.stqa.pft.sandbox;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import ru.stqa.pft.rest.sandbox.FirstMath;
-import ru.stqa.pft.rest.sandbox.Point;
 
 /**
  * Created by user on 13.08.17.
