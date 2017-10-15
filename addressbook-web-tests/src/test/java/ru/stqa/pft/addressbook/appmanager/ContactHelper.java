@@ -170,7 +170,7 @@ public class ContactHelper extends BaseHelper {
         selectGroupListAddTo(group);
         addGroup();
         System.out.println("added");
-        Thread.sleep(500);
+        Thread.sleep(2000);
     }
 
     //передаем контакт, чтоб найти группу, в которой его нет

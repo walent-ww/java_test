@@ -56,25 +56,29 @@ public class ContactAddGroupTest extends TestBase {
 
     @Test
     public void testContactAddGroup() throws InterruptedException {
+        Thread.sleep(1000);
         Contacts contacts = app.db().contacts();
         Groups groups = app.db().groups();
 
         // берем контакт, у которого не все группы
         ContactData editedContact = app.contact().searchContactForGroup(contacts, groups);
+        System.out.println(editedContact);
 
         // выбираем группу, которой еще нет у контакта
         GroupData group = app.contact().groupForContact(editedContact, groups);
+        System.out.println(group);
 
         // достаём из БД изменяемый контакт
         ContactData contactBefore = app.db().contact(editedContact.getId());
-
+        System.out.println("before" + contactBefore.getGroups());
         app.goTo().homePage();
         app.contact().contactAddGroup(editedContact, group);
 
         // достаём из БД измененный контакт
         ContactData contactAfter = app.db().contact(editedContact.getId());
-
-        assertThat(contactBefore.getGroups(),equalTo(contactAfter.getGroups().without(group)));
+        Groups groupAfter = contactAfter.getGroups().without(group);
+        System.out.println("after" + contactAfter.getGroups().without(group));
+        assertThat(contactBefore.getGroups(),equalTo(groupAfter));
 
     }
 
