@@ -165,11 +165,12 @@ public class ContactHelper extends BaseHelper {
     }
 
     // добавление контакту группы
-    public void contactAddGroup(ContactData editedContact, GroupData group) {
+    public void contactAddGroup(ContactData editedContact, GroupData group) throws InterruptedException {
         clickById(editedContact.getId());
         selectGroupListAddTo(group);
         addGroup();
         System.out.println("added");
+        Thread.sleep(500);
     }
 
     //передаем контакт, чтоб найти группу, в которой его нет

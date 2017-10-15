@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.*;
 /**
  * Created by user on 24.09.17.
  */
-public class ContactAddGroup extends TestBase {
+public class ContactAddGroupTest extends TestBase {
 
     @BeforeMethod
     public void beforeMethodGroup(){
@@ -55,7 +55,7 @@ public class ContactAddGroup extends TestBase {
 
 
     @Test
-    public void testContactAddGroup() {
+    public void testContactAddGroup() throws InterruptedException {
         Contacts contacts = app.db().contacts();
         Groups groups = app.db().groups();
 
